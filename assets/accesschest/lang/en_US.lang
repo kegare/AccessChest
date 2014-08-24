@@ -1,0 +1,21 @@
+accesschest.config=%s Configuration
+accesschest.config.wheelScrollAmount=Wheel Scroll Amount
+accesschest.config.wheelScrollAmount.tooltip=Specify the wheel scroll amount on access chest inventory.
+accesschest.config.ejectLimit=Eject Limit
+accesschest.config.ejectLimit.tooltip=Specify the eject limit amount of access chest.
+
+accesschest.key.collectiveTransfer=Collective Transfer Toggle Key
+accesschest.key.collectiveTransfer.toggle=Toggled collective transfer: %s
+accesschest.key.autoCollect=Auto Collect Toggle Key
+accesschest.key.autoCollect.toggle=Toggled auto collect: %s
+
+tile.accessChest.name=Access Chest
+tile.compressedChest.name=Compressed Chest
+
+gui.button.clear=Clear
+gui.button.sort=Sort
+gui.button.eject=Eject
+gui.button.storeInventory=StoreInv
+gui.button.storeEquipment=StoreEqp
+gui.button.enabled=Enabled
+gui.button.disabled=Disabled

@@ -1,12 +1,14 @@
 package com.accesschest.core;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.accesschest.block.AccessBlocks;
 import com.accesschest.handler.AccessEventHooks;
 import com.accesschest.handler.AccessGuiHandler;
+import com.accesschest.item.ItemAbstractChest;
 import com.accesschest.network.MessageAccessChest;
 import com.accesschest.network.MessageAutoCollect;
 import com.accesschest.network.MessageCollectiveTransfer;
@@ -32,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @Mod
 (
 	modid = AccessChest.MODID,
-	guiFactory = AccessChest.MOD_PACKAGE + "client.AccessGuiFactory"
+	guiFactory = AccessChest.MOD_PACKAGE + "client.config.AccessGuiFactory"
 )
 public class AccessChest
 {
@@ -66,14 +68,23 @@ public class AccessChest
 		@Override
 		public Item getTabIconItem()
 		{
-			return Item.getItemFromBlock(AccessBlocks.access_chest);
+			if (Config.accessChest)
+			{
+				return Item.getItemFromBlock(AccessBlocks.access_chest);
+			}
+			else if (Config.compressedChest)
+			{
+				return Item.getItemFromBlock(AccessBlocks.compressed_chest);
+			}
+
+			return Item.getItemFromBlock(Blocks.chest);
 		}
 
 		@SideOnly(Side.CLIENT)
 		@Override
 		public int func_151243_f()
 		{
-			return AccessUtils.getChestId(15, 0);
+			return getTabIconItem() instanceof ItemAbstractChest ? AccessUtils.getChestId(15, 0) : 0;
 		}
 	};
 

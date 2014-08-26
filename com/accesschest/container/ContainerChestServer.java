@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.accesschest.core.Config;
@@ -17,6 +16,8 @@ import com.accesschest.repository.RepositoryAccessChest;
 import com.accesschest.tileentity.TileEntityAbstractChest;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+
+import cpw.mods.fml.common.registry.GameData;
 
 public class ContainerChestServer extends ContainerAbstractChest
 {
@@ -213,7 +214,7 @@ public class ContainerChestServer extends ContainerAbstractChest
 		List<String> list = Lists.newArrayList();
 		list.add(itemstack.getDisplayName());
 		list.add(itemstack.getItem().getUnlocalizedName());
-		list.add(Item.itemRegistry.getNameForObject(itemstack.getItem()) + ":" + itemstack.getItemDamage());
+		list.add(GameData.getItemRegistry().getNameForObject(itemstack.getItem()) + ":" + itemstack.getItemDamage());
 
 		String exactFilter;
 

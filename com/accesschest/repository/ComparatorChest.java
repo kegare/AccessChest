@@ -7,28 +7,28 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import com.accesschest.core.AccessChest;
-import com.accesschest.util.AccessUtils;
 import com.google.common.collect.Maps;
 
-public class ComparatorChest implements Comparator
+import cpw.mods.fml.common.registry.GameData;
+
+public class ComparatorChest implements Comparator<ItemStack>
 {
 	protected final Map<KeyPair, Integer> priorityMap = Maps.newHashMap();
 
 	@Override
-	public int compare(Object o1, Object o2)
+	public int compare(ItemStack o1, ItemStack o2)
 	{
 		int i = compareWithNull(o1, o2);
 
 		if (i == 0 && o1 != null && o2 != null)
 		{
-			ItemStack itemstack1 = (ItemStack)o1;
-			ItemStack itemstack2 = (ItemStack)o2;
+			ItemStack itemstack1 = o1;
+			ItemStack itemstack2 = o2;
 
 			i = compareWithPriority(itemstack1, itemstack2);
 
@@ -53,7 +53,7 @@ public class ComparatorChest implements Comparator
 
 	private int compareWithPriority(ItemStack itemstack1, ItemStack itemstack2)
 	{
-		return getPriority(itemstack1) - getPriority(itemstack2);
+		return Integer.compare(getPriority(itemstack1), getPriority(itemstack2));
 	}
 
 	public int getPriority(ItemStack itemstack)
@@ -94,7 +94,7 @@ public class ComparatorChest implements Comparator
 			return itemstack1.getItemDamage() - itemstack2.getItemDamage();
 		}
 
-		return AccessUtils.getNameHashCode(itemstack1) - AccessUtils.getNameHashCode(itemstack2);
+		return GameData.getItemRegistry().getNameForObject(itemstack1.getItem()).compareTo(GameData.getItemRegistry().getNameForObject(itemstack2.getItem()));
 	}
 
 	protected int compareWithNBTId(ItemStack itemstack1, ItemStack itemstack2)
@@ -112,7 +112,7 @@ public class ComparatorChest implements Comparator
 			return 1;
 		}
 
-		return itemstack1.stackTagCompound.getId() - itemstack2.stackTagCompound.getId();
+		return Integer.compare(itemstack1.stackTagCompound.getId(), itemstack2.stackTagCompound.getId());
 	}
 
 	public void readFromNBT(NBTTagCompound nbt)
@@ -163,7 +163,7 @@ public class ComparatorChest implements Comparator
 			}
 			else
 			{
-				this.name = Item.itemRegistry.getNameForObject(itemstack.getItem());
+				this.name = GameData.getItemRegistry().getNameForObject(itemstack.getItem());
 
 				if (itemstack.isItemStackDamageable())
 				{

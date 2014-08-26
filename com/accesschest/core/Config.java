@@ -21,8 +21,11 @@ public class Config
 {
 	public static Configuration config;
 
-	public static int wheelScrollAmount = 8;
-	public static int ejectLimit = 96;
+	public static int wheelScrollAmount;
+	public static int ejectLimit;
+
+	public static boolean accessChest;
+	public static boolean compressedChest;
 
 	public static void syncConfig()
 	{
@@ -57,7 +60,7 @@ public class Config
 
 		if (side.isClient())
 		{
-			prop = config.get(category, "wheelScrollAmount", wheelScrollAmount);
+			prop = config.get(category, "wheelScrollAmount", 8);
 			prop.setMinValue(1).setMaxValue(Byte.MAX_VALUE).setLanguageKey("accesschest.config." + prop.getName());
 			prop.comment = StatCollector.translateToLocal(prop.getLanguageKey() + ".tooltip");
 			prop.comment += " [range: " + prop.getMinValue() + " ~ " + prop.getMaxValue() + ", default: " + prop.getDefault() + "]";
@@ -67,7 +70,7 @@ public class Config
 			wheelScrollAmount = MathHelper.clamp_int(prop.getInt(), Integer.valueOf(prop.getMinValue()), Integer.valueOf(prop.getMaxValue()));
 		}
 
-		prop = config.get(category, "ejectLimit", ejectLimit);
+		prop = config.get(category, "ejectLimit", 96);
 		prop.setMinValue(1).setMaxValue(Short.MAX_VALUE).setLanguageKey("accesschest.config." + prop.getName());
 		prop.comment = StatCollector.translateToLocal(prop.getLanguageKey() + ".tooltip");
 		prop.comment += " [range: " + prop.getMinValue() + " ~ " + prop.getMaxValue() + ", default: " + prop.getDefault() + "]";
@@ -77,6 +80,24 @@ public class Config
 		ejectLimit = MathHelper.clamp_int(prop.getInt(), Integer.valueOf(prop.getMinValue()), Integer.valueOf(prop.getMaxValue()));
 
 		config.setCategoryPropertyOrder(category, propOrder);
+
+		category = "blocks";
+		prop = config.get(category, "Access Chest", true);
+		prop.setLanguageKey("accesschest.config." + prop.getName()).setRequiresMcRestart(true);
+		prop.comment = StatCollector.translateToLocal(prop.getLanguageKey() + ".tooltip");
+		prop.comment += " [default: " + prop.getDefault() + "]";
+		propOrder.add(prop.getName());
+		accessChest = prop.getBoolean();
+		prop = config.get(category, "Compressed Chest", true);
+		prop.setLanguageKey("accesschest.config." + prop.getName()).setRequiresMcRestart(true);
+		prop.comment = StatCollector.translateToLocal(prop.getLanguageKey() + ".tooltip");
+		prop.comment += " [default: " + prop.getDefault() + "]";
+		propOrder.add(prop.getName());
+		compressedChest = prop.getBoolean();
+
+		config.setCategoryComment(category, "If multiplayer, values must match on client-side and server-side.");
+		config.setCategoryPropertyOrder(category, propOrder);
+		config.setCategoryRequiresMcRestart(category, true);
 
 		if (config.hasChanged())
 		{

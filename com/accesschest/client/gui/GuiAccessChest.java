@@ -27,6 +27,7 @@ import com.accesschest.network.MessageSort;
 import com.accesschest.network.MessageStore;
 import com.google.common.collect.Maps;
 
+import cpw.mods.fml.client.config.GuiButtonExt;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -68,21 +69,19 @@ public class GuiAccessChest extends GuiContainer
 	{
 		super.initGui();
 
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		int left = x + 176;
-		int line0 = y + 9 + 156;
-		int line1 = y + 9 + 173;
+		int left = guiLeft + 176;
+		int line0 = guiTop + 9 + 156;
+		int line1 = guiTop + 9 + 173;
 		int line2 = line1 + 19;
 		int line3 = line2 + 19;
 		int butWidth = 68;
 		int butHeight = 20;
 
-		clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, I18n.format("gui.button.clear"));
-		sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line2, butWidth, butHeight, I18n.format("gui.button.sort"));
-		ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.format("gui.button.eject"));
-		storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line2, butWidth, butHeight, I18n.format("gui.button.storeInventory"));
-		storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line3, butWidth, butHeight, I18n.format("gui.button.storeEquipment"));
+		clearButton = new GuiButtonExt(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, I18n.format("gui.button.clear"));
+		sortButton = new GuiButtonExt(GUI_SORT_BUTTON_ID, left, line2, butWidth, butHeight, I18n.format("gui.button.sort"));
+		ejectButton = new GuiButtonExt(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.format("gui.button.eject"));
+		storeInvButton = new GuiButtonExt(GUI_STOREINV_BUTTON_ID, left, line2, butWidth, butHeight, I18n.format("gui.button.storeInventory"));
+		storeEqpButton = new GuiButtonExt(GUI_STOREEQP_BUTTON_ID, left, line3, butWidth, butHeight, I18n.format("gui.button.storeEquipment"));
 
 		updateButtonsDisplay(false);
 
@@ -122,16 +121,14 @@ public class GuiAccessChest extends GuiContainer
 
 		mc.getTextureManager().bindTexture(new ResourceLocation("accesschest", "textures/gui/chest.png"));
 
-		int i = (width - xSize) / 2;
-		int j = (height - ySize) / 2;
-		drawTexturedModalRect(i, j + 9, 0, 0, xSize, ySize - 18);
+		drawTexturedModalRect(guiLeft, guiTop + 9, 0, 0, xSize, ySize - 18);
 
 		int k = container.getScrollMax();
 
 		if (k != 0)
 		{
 			int scroll = (int)((142 - 15) * (double)container.getScrollIndex() / k);
-			drawTexturedModalRect(i + 232, j + 17 + scroll, 2, 239, 12, 15);
+			drawTexturedModalRect(guiLeft + 232, guiTop + 17 + scroll, 2, 239, 12, 15);
 		}
 
 		int opacity = 63;
@@ -140,8 +137,8 @@ public class GuiAccessChest extends GuiContainer
 		{
 			int x = a % 12;
 			int y = a / 12;
-			int xPos = i + 12 + x * 18;
-			int yPos = j + 9 + 8 + y * 18;
+			int xPos = guiLeft + 12 + x * 18;
+			int yPos = guiTop + 9 + 8 + y * 18;
 
 			drawGradientRect(xPos, yPos, xPos + 16, yPos + 16, opacity << 24, opacity << 24);
 		}
@@ -168,7 +165,7 @@ public class GuiAccessChest extends GuiContainer
 
 		if (isScrolling && Mouse.isButtonDown(0))
 		{
-			scrollbarDragged(this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1);
+			scrollbarDragged(height - Mouse.getEventY() * height / mc.displayHeight - 1);
 			AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
 		}
 		else

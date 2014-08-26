@@ -1,4 +1,4 @@
-package com.accesschest.client;
+package com.accesschest.client.config;
 
 import java.util.Set;
 

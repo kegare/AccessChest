@@ -116,16 +116,13 @@ public class ItemAccessChest extends ItemAbstractChest
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
-		for (int i = 0; i < 16; ++i)
+		for (int color = 0; color < 16; ++color)
 		{
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 0, true)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 1, true)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 2, true)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 3, true)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 0, false)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 1, false)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 2, false)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 3, false)));
+			for (int grade = 0; grade < 4; ++grade)
+			{
+				list.add(new ItemStack(item, 1, AccessUtils.getChestId(color, grade, true)));
+				list.add(new ItemStack(item, 1, AccessUtils.getChestId(color, grade, false)));
+			}
 		}
 	}
 

@@ -3,6 +3,10 @@ accesschest.config.wheelScrollAmount=ホイールスクロール量
 accesschest.config.wheelScrollAmount.tooltip=アクセスチェストインベントリでのホイールスクロール量を指定します。
 accesschest.config.ejectLimit=排出制限
 accesschest.config.ejectLimit.tooltip=アクセスチェストのアイテム一括排出の許容量を指定します。
+accesschest.config.Access Chest=アクセスチェスト
+accesschest.config.Access Chest.tooltip=アクセスチェストを追加します。
+accesschest.config.Compressed Chest=圧縮チェスト
+accesschest.config.Compressed Chest.tooltip=圧縮チェストを追加します。
 
 accesschest.key.collectiveTransfer=一括転送の切り換えキー
 accesschest.key.collectiveTransfer.toggle=一括転送を切り換えました: %s

@@ -19,12 +19,12 @@ public class ItemCompressedChest extends ItemAbstractChest
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
-		for (int i = 0; i < 16; ++i)
+		for (int color = 0; color < 16; ++color)
 		{
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 0)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 1)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 2)));
-			list.add(new ItemStack(item, 1, AccessUtils.getChestId(i, 3)));
+			for (int grade = 0; grade < 4; ++grade)
+			{
+				list.add(new ItemStack(item, 1, AccessUtils.getChestId(color, grade)));
+			}
 		}
 	}
 }

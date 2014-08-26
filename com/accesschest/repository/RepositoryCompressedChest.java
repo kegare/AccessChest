@@ -2,6 +2,8 @@ package com.accesschest.repository;
 
 import net.minecraft.nbt.NBTTagCompound;
 
+import com.accesschest.block.AccessBlocks;
+
 public class RepositoryCompressedChest extends Repository
 {
 	public RepositoryCompressedChest(int color, int grade)
@@ -12,7 +14,7 @@ public class RepositoryCompressedChest extends Repository
 	@Override
 	public String getInventoryName()
 	{
-		return "Compressed Chest";
+		return AccessBlocks.compressed_chest.getLocalizedName();
 	}
 
 	public void readFromNBT(NBTTagCompound nbt)

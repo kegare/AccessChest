@@ -2,8 +2,6 @@ package com.accesschest.util;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.accesschest.item.ItemAbstractChest;
@@ -38,24 +36,6 @@ public class AccessUtils
 	public static boolean isOriginal(ItemStack itemstack)
 	{
 		return isOriginal(itemstack.getItemDamage());
-	}
-
-	public static int getNameHashCode(Object obj)
-	{
-		if (obj instanceof ItemStack)
-		{
-			return Item.itemRegistry.getNameForObject(((ItemStack)obj).getItem()).hashCode();
-		}
-		else if (obj instanceof Block)
-		{
-			return Block.blockRegistry.getNameForObject(obj).hashCode();
-		}
-		else if (obj instanceof Item)
-		{
-			return Item.itemRegistry.getNameForObject(obj).hashCode();
-		}
-
-		return -1;
 	}
 
 	public static boolean canMerge(ItemStack is1, ItemStack is2)

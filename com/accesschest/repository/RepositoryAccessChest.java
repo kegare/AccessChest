@@ -1,10 +1,11 @@
 package com.accesschest.repository;
 
-import com.accesschest.tileentity.TileEntityAccessChest;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import com.accesschest.block.AccessBlocks;
+import com.accesschest.tileentity.TileEntityAccessChest;
 
 public class RepositoryAccessChest extends Repository
 {
@@ -16,16 +17,7 @@ public class RepositoryAccessChest extends Repository
 	@Override
 	public String getInventoryName()
 	{
-		/*
-		String name = AccessChestManager.name.getChestName(ownerName, colorNumber);
-
-		if (!name.equals(""))
-		{
-			str += name;
-		}
-		*/
-
-		return "Access Chest";
+		return AccessBlocks.access_chest.getLocalizedName();
 	}
 
 	public void extractInventory(IInventory inventory)

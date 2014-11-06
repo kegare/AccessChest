@@ -56,7 +56,7 @@ public class AccessEventHooks
 	{
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		EntityPlayer player = mc.thePlayer;
-		String uuid = player.getUniqueID().toString();
+		String uuid = player.getGameProfile().getId().toString();
 		IChatComponent message = new ChatComponentText("[" + AccessChest.MOD_NAME + "] ");
 		IChatComponent component;
 		String enabled = I18n.format("gui.button.enabled");
@@ -120,7 +120,7 @@ public class AccessEventHooks
 		if (event.player instanceof EntityPlayerMP)
 		{
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
-			String uuid = player.getUniqueID().toString();
+			String uuid = player.getGameProfile().getId().toString();
 
 			if (player.getEntityData().getBoolean("AC:AutoCollect"))
 			{
@@ -142,7 +142,7 @@ public class AccessEventHooks
 	{
 		EntityPlayer player = event.entityPlayer;
 
-		if (!autoCollect.contains(player.getUniqueID().toString()))
+		if (!autoCollect.contains(player.getGameProfile().getId().toString()))
 		{
 			return;
 		}

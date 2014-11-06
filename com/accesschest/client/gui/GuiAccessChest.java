@@ -41,7 +41,7 @@ public class GuiAccessChest extends GuiContainer
 	private static final int GUI_STOREINV_BUTTON_ID = 4;
 	private static final int GUI_STOREEQP_BUTTON_ID = 5;
 
-	private static final Map<Integer, Integer> scrollIndexMap = Maps.newHashMap();
+	private static final Map<Integer, Integer> lastScrolledIndex = Maps.newHashMap();
 
 	private final ContainerChestClient container;
 	private final int chestId;
@@ -107,6 +107,13 @@ public class GuiAccessChest extends GuiContainer
 	@Override
 	public void drawScreen(int x, int y, float par3)
 	{
+		if (lastScrolledIndex.containsKey(chestId))
+		{
+			container.setScrollIndex(lastScrolledIndex.remove(chestId));
+
+			AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
+		}
+
 		super.drawScreen(x, y, par3);
 
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -142,12 +149,6 @@ public class GuiAccessChest extends GuiContainer
 
 			drawGradientRect(xPos, yPos, xPos + 16, yPos + 16, opacity << 24, opacity << 24);
 		}
-
-		if (scrollIndexMap.containsKey(chestId))
-		{
-			container.setScrollIndex(scrollIndexMap.remove(chestId));
-			AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
-		}
 	}
 
 	@Override
@@ -160,12 +161,14 @@ public class GuiAccessChest extends GuiContainer
 		if (wheelDiff != 0)
 		{
 			container.setScrollIndex(container.getScrollIndex() - wheelDiff * Config.wheelScrollAmount);
+
 			AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
 		}
 
 		if (isScrolling && Mouse.isButtonDown(0))
 		{
 			scrollbarDragged(height - Mouse.getEventY() * height / mc.displayHeight - 1);
+
 			AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
 		}
 		else
@@ -251,6 +254,7 @@ public class GuiAccessChest extends GuiContainer
 				if (slot != null && slot.getHasStack())
 				{
 					filterTextField.setText(slot.getStack().getDisplayName());
+
 					AccessChest.network.sendToServer(new MessageFilter(filterTextField.getText()));
 				}
 			}
@@ -342,11 +346,11 @@ public class GuiAccessChest extends GuiContainer
 
 		if (chestId != AccessChest.GUI_ID_TILEENTITY)
 		{
-			scrollIndexMap.put(chestId, container.getScrollIndex());
+			lastScrolledIndex.put(chestId, container.getScrollIndex());
 		}
 	}
 
-	private Slot getSlotAtPosition(int x, int y)
+	protected Slot getSlotAtPosition(int x, int y)
 	{
 		for (int i = 0; i < inventorySlots.inventorySlots.size(); ++i)
 		{

@@ -12,6 +12,9 @@ import net.minecraft.world.World;
 import com.accesschest.tileentity.TileEntityAbstractChest;
 import com.accesschest.util.AccessUtils;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public abstract class ItemAbstractChest extends ItemBlock
 {
 	public ItemAbstractChest(Block block)
@@ -32,6 +35,7 @@ public abstract class ItemAbstractChest extends ItemBlock
 		return result;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean advanced)
 	{

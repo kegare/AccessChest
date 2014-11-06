@@ -36,7 +36,7 @@ public class MessageCollectiveTransfer implements IMessage, IMessageHandler<Mess
 	public IMessage onMessage(MessageCollectiveTransfer message, MessageContext ctx)
 	{
 		EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-		String uuid = player.getUniqueID().toString();
+		String uuid = player.getGameProfile().getId().toString();
 
 		if (message.collectiveTransfer)
 		{

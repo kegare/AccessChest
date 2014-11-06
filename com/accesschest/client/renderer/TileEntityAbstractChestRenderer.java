@@ -30,6 +30,7 @@ public class TileEntityAbstractChestRenderer extends TileEntitySpecialRenderer i
 	};
 
 	private static final TileEntityAbstractChest tileEntityChestDammy = new TileEntityAccessChest();
+
 	private final ModelChest model = new ModelChest();
 
 	public void renderChest(int direction, int colorNum, float lidAngle, float prevLidAngle, double x, double y, double z, float ticks)
@@ -73,7 +74,7 @@ public class TileEntityAbstractChestRenderer extends TileEntitySpecialRenderer i
 		lidangle = 1.0F - lidangle;
 		lidangle = 1.0F - lidangle * lidangle * lidangle;
 
-		model.chestLid.rotateAngleX = -((lidangle * 3.141593F) / 2.0F);
+		model.chestLid.rotateAngleX = -(lidangle * 3.141593F / 2.0F);
 		model.renderAll();
 
 		GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);

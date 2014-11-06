@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import com.accesschest.core.AccessChest;
+import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -179,14 +180,7 @@ public class ComparatorChest implements Comparator<ItemStack>
 		@Override
 		public int hashCode()
 		{
-			final int prime = 31;
-			int result = 1;
-
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result + damage;
-			result = prime * result + (name == null ? -1 : name.hashCode());
-
-			return result;
+			return Objects.hashCode(getOuterType(), damage, name == null ? -1 : name);
 		}
 
 		@Override

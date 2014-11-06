@@ -79,7 +79,7 @@ public class AccessBlocks
 			ItemStack ac2 = new ItemStack(compressed_chest, 1, AccessUtils.getChestId(15, 2));
 			ItemStack ac3 = new ItemStack(compressed_chest, 1, AccessUtils.getChestId(15, 3));
 
-			GameRegistry.addShapelessRecipe(ac0, Blocks.chest, Items.diamond);
+			GameRegistry.addShapelessRecipe(ac0, Blocks.chest, Items.ender_eye);
 			GameRegistry.addRecipe(new RecipeChest(new ItemStack(Blocks.redstone_block), ac0, ac1));
 			GameRegistry.addRecipe(new RecipeChest(new ItemStack(Blocks.gold_block), ac1, ac2));
 			GameRegistry.addRecipe(new RecipeChest(new ItemStack(Blocks.diamond_block), ac2, ac3));

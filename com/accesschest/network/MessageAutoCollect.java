@@ -44,7 +44,7 @@ public class MessageAutoCollect implements IMessage, IMessageHandler<MessageAuto
 			player.getEntityData().setBoolean("AC:AutoCollect", message.autoCollect);
 		}
 
-		String uuid = player.getUniqueID().toString();
+		String uuid = player.getGameProfile().getId().toString();
 
 		if (message.autoCollect)
 		{

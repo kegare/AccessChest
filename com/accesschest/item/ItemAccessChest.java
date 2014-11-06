@@ -55,7 +55,7 @@ public class ItemAccessChest extends ItemAbstractChest
 	{
 		TileEntity entity = world.getTileEntity(x, y, z);
 
-		if (!world.isRemote && entity instanceof IInventory && collectiveTransfer.contains(player.getUniqueID().toString()))
+		if (!world.isRemote && entity instanceof IInventory && collectiveTransfer.contains(player.getGameProfile().getId().toString()))
 		{
 			RepositoryAccessChest repo = new RepositoryAccessChest(world,
 				AccessUtils.getColor(itemstack.getItemDamage()), AccessUtils.getGrade(itemstack.getItemDamage()), AccessUtils.isOriginal(itemstack.getItemDamage()));
@@ -63,13 +63,9 @@ public class ItemAccessChest extends ItemAbstractChest
 
 			if (entity instanceof TileEntityChest)
 			{
-				TileEntity chest;
-
 				for (int i = 1; i <= 7; i += 2)
 				{
-					chest = world.getTileEntity(x + (i / 3 - 1), y, z + (i % 3 - 1));
-
-					if (chest instanceof TileEntityChest)
+					if (world.getTileEntity(x + i / 3 - 1, y, z + i % 3 - 1) instanceof TileEntityChest)
 					{
 						inventory = new InventoryLargeChest("", inventory, (TileEntityChest)entity);
 
@@ -105,7 +101,7 @@ public class ItemAccessChest extends ItemAbstractChest
 	@Override
 	public boolean placeBlockAt(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
 	{
-		if (player.isSneaking() && !collectiveTransfer.contains(player.getUniqueID().toString()))
+		if (player.isSneaking() && !collectiveTransfer.contains(player.getGameProfile().getId().toString()))
 		{
 			return super.placeBlockAt(itemstack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
 		}
@@ -127,7 +123,7 @@ public class ItemAccessChest extends ItemAbstractChest
 	}
 
 	@Override
-	public boolean hasContainerItem()
+	public boolean hasContainerItem(ItemStack itemstack)
 	{
 		return coping;
 	}
@@ -155,21 +151,16 @@ public class ItemAccessChest extends ItemAbstractChest
 			return;
 		}
 
-		IInventory crafting = event.craftMatrix;
-		boolean flag = false;
-
-		for (int i = 0; i < crafting.getSizeInventory(); ++i)
+		for (int i = 0; i < event.craftMatrix.getSizeInventory(); ++i)
 		{
-			ItemStack itemstack = crafting.getStackInSlot(i);
+			ItemStack itemstack = event.craftMatrix.getStackInSlot(i);
 
-			if (itemstack != null && itemstack.isItemEqual(new ItemStack(Blocks.ender_chest)))
+			if (itemstack != null && itemstack.getItem() == Item.getItemFromBlock(Blocks.ender_chest))
 			{
-				flag = true;
+				coping = true;
 
 				break;
 			}
 		}
-
-		coping = flag;
 	}
 }

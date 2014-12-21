@@ -101,15 +101,15 @@ public class AccessChest
 	{
 		byte id = 0;
 
-		AccessChest.network.registerMessage(MessageScrollIndex.class, MessageScrollIndex.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageFilter.class, MessageFilter.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageSort.class, MessageSort.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageStore.class, MessageStore.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageEject.class, MessageEject.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageCollectiveTransfer.class, MessageCollectiveTransfer.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageAutoCollect.class, MessageAutoCollect.class, id++, Side.CLIENT);
-		AccessChest.network.registerMessage(MessageAutoCollect.class, MessageAutoCollect.class, id++, Side.SERVER);
-		AccessChest.network.registerMessage(MessageAccessChest.class, MessageAccessChest.class, id++, Side.CLIENT);
+		network.registerMessage(MessageScrollIndex.class, MessageScrollIndex.class, id++, Side.SERVER);
+		network.registerMessage(MessageFilter.class, MessageFilter.class, id++, Side.SERVER);
+		network.registerMessage(MessageSort.class, MessageSort.class, id++, Side.SERVER);
+		network.registerMessage(MessageStore.class, MessageStore.class, id++, Side.SERVER);
+		network.registerMessage(MessageEject.class, MessageEject.class, id++, Side.SERVER);
+		network.registerMessage(MessageCollectiveTransfer.class, MessageCollectiveTransfer.class, id++, Side.SERVER);
+		network.registerMessage(MessageAutoCollect.class, MessageAutoCollect.class, id++, Side.CLIENT);
+		network.registerMessage(MessageAutoCollect.class, MessageAutoCollect.class, id++, Side.SERVER);
+		network.registerMessage(MessageAccessChest.class, MessageAccessChest.class, id++, Side.CLIENT);
 
 		proxy.registerRenderers();
 		proxy.registerKeyBindings();

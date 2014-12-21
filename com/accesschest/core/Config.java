@@ -61,7 +61,7 @@ public class Config
 		if (side.isClient())
 		{
 			prop = config.get(category, "wheelScrollAmount", 8);
-			prop.setMinValue(1).setMaxValue(Byte.MAX_VALUE).setLanguageKey("accesschest.config." + prop.getName());
+			prop.setMinValue(0).setMaxValue(Byte.MAX_VALUE).setLanguageKey("accesschest.config." + prop.getName());
 			prop.comment = StatCollector.translateToLocal(prop.getLanguageKey() + ".tooltip");
 			prop.comment += " [range: " + prop.getMinValue() + " ~ " + prop.getMaxValue() + ", default: " + prop.getDefault() + "]";
 			prop.comment += Configuration.NEW_LINE;

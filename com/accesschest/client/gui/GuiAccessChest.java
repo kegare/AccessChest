@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
@@ -28,6 +29,7 @@ import com.accesschest.network.MessageStore;
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.client.config.GuiButtonExt;
+import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -35,6 +37,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiAccessChest extends GuiContainer
 {
+	private static final ResourceLocation chestGuiTexture = new ResourceLocation("accesschest", "textures/gui/chest.png");
+
 	private static final int GUI_CLEAR_BUTTON_ID = 1;
 	private static final int GUI_SORT_BUTTON_ID = 2;
 	private static final int GUI_EJECT_BUTTON_ID = 3;
@@ -67,6 +71,8 @@ public class GuiAccessChest extends GuiContainer
 	@Override
 	public void initGui()
 	{
+		Keyboard.enableRepeatEvents(true);
+
 		super.initGui();
 
 		int left = guiLeft + 176;
@@ -116,8 +122,6 @@ public class GuiAccessChest extends GuiContainer
 
 		super.drawScreen(x, y, par3);
 
-		GL11.glDisable(GL11.GL_LIGHTING);
-
 		filterTextField.drawTextBox();
 	}
 
@@ -126,7 +130,7 @@ public class GuiAccessChest extends GuiContainer
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		mc.getTextureManager().bindTexture(new ResourceLocation("accesschest", "textures/gui/chest.png"));
+		mc.getTextureManager().bindTexture(chestGuiTexture);
 
 		drawTexturedModalRect(guiLeft, guiTop + 9, 0, 0, xSize, ySize - 18);
 
@@ -156,7 +160,7 @@ public class GuiAccessChest extends GuiContainer
 	{
 		super.handleMouseInput();
 
-		int wheelDiff = Math.max(-1, Math.min(Mouse.getDWheel(), 1));
+		int wheelDiff = MathHelper.clamp_int(Mouse.getDWheel(), -1, 1);
 
 		if (wheelDiff != 0)
 		{
@@ -184,10 +188,7 @@ public class GuiAccessChest extends GuiContainer
 
 		filterTextField.mouseClicked(x, y, code);
 
-		int i = (width - xSize) / 2;
-		int j = (height - ySize) / 2;
-
-		if (i + 232 <= x && x < i + 232 + 12 && j + 17 <= y && y < j + 17 + 142)
+		if (guiLeft + 232 <= x && x < guiLeft + 232 + 12 && guiTop + 17 <= y && y < guiTop + 17 + 142)
 		{
 			isScrolling = true;
 		}
@@ -205,7 +206,7 @@ public class GuiAccessChest extends GuiContainer
 	{
 		super.handleKeyboardInput();
 
-		updateButtonsDisplay(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
+		updateButtonsDisplay(GuiConfig.isShiftKeyDown());
 	}
 
 	private void updateButtonsDisplay(boolean shift)
@@ -233,7 +234,7 @@ public class GuiAccessChest extends GuiContainer
 
 				String text = filterTextField.getText();
 
-				if (text != prev)
+				if (!text.equals(prev))
 				{
 					AccessChest.network.sendToServer(new MessageFilter(text));
 				}
@@ -257,6 +258,18 @@ public class GuiAccessChest extends GuiContainer
 
 					AccessChest.network.sendToServer(new MessageFilter(filterTextField.getText()));
 				}
+			}
+			else if (code == Keyboard.KEY_UP)
+			{
+				container.setScrollIndex(container.getScrollIndex() - 8);
+
+				AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
+			}
+			else if (code == Keyboard.KEY_DOWN)
+			{
+				container.setScrollIndex(container.getScrollIndex() + 8);
+
+				AccessChest.network.sendToServer(new MessageScrollIndex(container.getScrollIndex()));
 			}
 			else
 			{
@@ -348,6 +361,8 @@ public class GuiAccessChest extends GuiContainer
 		{
 			lastScrolledIndex.put(chestId, container.getScrollIndex());
 		}
+
+		Keyboard.enableRepeatEvents(false);
 	}
 
 	protected Slot getSlotAtPosition(int x, int y)

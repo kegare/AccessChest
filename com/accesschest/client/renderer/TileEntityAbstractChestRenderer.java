@@ -24,7 +24,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class TileEntityAbstractChestRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler
 {
-	public static final int[] COLOR_CODES = new int[] {
+	public static final int[] COLOR_CODES = new int[]
+	{
 		0x1e1b1b, 0xb3312c, 0x3b511a, 0x51301a, 0x253192, 0x7b2fbe, 0x287697, 0x9a9a9a, 0x434343, 0xd88198,
 		0x41cd34, 0xdecf2a, 0x6689d3, 0xc354cd, 0xeb8844, 0xf0f0f0
 	};

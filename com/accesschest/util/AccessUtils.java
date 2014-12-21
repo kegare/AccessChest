@@ -1,10 +1,11 @@
 package com.accesschest.util;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
 import com.accesschest.item.ItemAbstractChest;
+import com.google.common.collect.Lists;
 
 public class AccessUtils
 {
@@ -79,9 +80,9 @@ public class AccessUtils
 		}
 	}
 
-	public static ArrayList<ItemStack> recipeList(ItemStack original, ItemStack sub)
+	public static List<ItemStack> recipeList(ItemStack original, ItemStack sub)
 	{
-		ArrayList<ItemStack> list = new ArrayList();
+		List<ItemStack> list = Lists.newArrayList();
 
 		list.add(original);
 
